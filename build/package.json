@@ -1,0 +1,12 @@
+{
+  "name": "meteor-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "IMAGE=$npm_package_name:$npm_package_version;docker build -t $IMAGE .",
+    "push": "docker login --username=mgonand;docker tag $npm_package_name:$npm_package_version binpar/$npm_package_name:$npm_package_version;docker push binpar/$npm_package_name:$npm_package_version"
+  },
+  "author": "",
+  "license": "ISC"
+}

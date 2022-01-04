@@ -1,12 +1,29 @@
 
 # -- Base Node ---
-FROM node:4.8.4-alpine as base
+FROM node:14-alpine as base
 WORKDIR /usr/src/app
 RUN apk --no-cache add \
   bash \
   ca-certificates
 
-RUN apk add --update make gcc g++ python git
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update  --no-cache libstdc++
+RUN apk add --update --no-cache \
+  binutils-gold \
+  curl \
+  g++ \
+  gcc \
+  gnupg \
+  libgcc \
+  linux-headers \
+  make \
+  python2 \
+  git && \
+  python -m ensurepip && \
+  rm -r /usr/lib/python*/ensurepip && \
+  pip install --upgrade pip setuptools && \
+  rm -r /root/.cache
+
 
 # install graphicsmagick from source because install via apk not working
 ENV PKGNAME=graphicsmagick

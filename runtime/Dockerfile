@@ -30,11 +30,16 @@ ENV PKGNAME=graphicsmagick
 ENV PKGVER=1.3.35
 ENV PKGSOURCE=http://downloads.sourceforge.net/$PKGNAME/$PKGNAME/$PKGVER/GraphicsMagick-$PKGVER.tar.lz
 
+# ffmpeg
+ENV PATH=/opt/ffmpeg/bin:$PATH
+COPY --from=alfg/ffmpeg:latest /opt/ffmpeg /opt/ffmpeg
+COPY --from=alfg/ffmpeg:latest /usr/lib /usr/lib-ffmpeg
+RUN cp /usr/lib-ffmpeg/lib* /usr/lib/ && rm -rf /usr/lib-ffmpeg
+
 # Installing graphicsmagick dependencies
 RUN apk add --update \
   lzip \
   wget \
-  ffmpeg \
   libjpeg-turbo-dev \
   libpng-dev \
   libtool \
